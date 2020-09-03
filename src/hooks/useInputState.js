@@ -1,4 +1,3 @@
-import React from "react";
 import {useState} from "react";
 
 function useInputState(initialVal, action) {
@@ -7,14 +6,11 @@ function useInputState(initialVal, action) {
         setValue(e.target.value);
     }
 
-    const handleSubmit = (e) => {
-        action(value)
-    }
     const reset = () => {
         setValue("");
     }
 
-    return [value, handleChange, handleSubmit, reset];
+    return [value, handleChange, reset];
 }
 
 export default useInputState;

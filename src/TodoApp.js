@@ -17,6 +17,12 @@ export default function TodoApp() {
       ]
 
       const [todos, setTodos] = useState(initialTodos)
+
+      //Have a function to add the todos created in the form to the states
+      const addTodo = (newTodoText) => {
+          // Concatenate the new value to the already existing array of todos
+        setTodos([...todos, {id: 4, task: newTodoText, completed: false}]);
+      }
     return(
         <Paper
         style={{
@@ -33,7 +39,7 @@ export default function TodoApp() {
                 </Toolbar>
             </AppBar>
             <TodoList todos = {todos}/>
-            <TodoForm />
+            <TodoForm addTodo = {addTodo}/>
         </Paper>
     )
 }
