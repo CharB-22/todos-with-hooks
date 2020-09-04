@@ -1,28 +1,39 @@
 import React from "react";
+import {useState} from "react";
+import TodoList from "./TodoList";
+import TodoForm from "./TodoForm";
+import { v4 as uuidv4 } from 'uuid';
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Grid from "@material-ui/core/Grid";
-import {useState} from "react";
-import TodoList from "./TodoList";
-import TodoForm from "./TodoForm";
 
 export default function TodoApp() {
-    const initialTodos = [
-        {id: 1, task: "Walk dog", completed: false},
-        {id: 2, task: "Wash Car", completed: true},
-        {id: 3, task: "Clean FishTank", completed: false},
-        {id: 4, task: "Prepare Dinner", completed: false}
-      ]
+    const initialTodos = []
 
       const [todos, setTodos] = useState(initialTodos)
 
       //Have a function to add the todos created in the form to the states
       const addTodo = (newTodoText) => {
           // Concatenate the new value to the already existing array of todos
-        setTodos([...todos, {id: 4, task: newTodoText, completed: false}]);
+        setTodos([...todos, {id: uuidv4(), task: newTodoText, completed: false}]);
       }
+
+      const removeTodo = todoId => {
+        const newTodos = todos.filter(todo => todo.id !== todoId);
+        setTodos(newTodos)
+      }
+
+      const toggleTodo = todoId => {
+          const newTodos = todos.map(todo => 
+            todo.id === todoId ? 
+            {...todo, completed: !todo.completed} : todo
+            );
+        setTodos(newTodos)
+        console.log(newTodos)
+      }
+
     return(
         <Paper
         style={{
@@ -40,7 +51,7 @@ export default function TodoApp() {
             </AppBar>
             <Grid container justify="center" style={{marginTop: "1rem"}}>
                 <Grid item xs={11} md={8} lg={4}>
-                    <TodoList todos = {todos}/>
+                    <TodoList todos = {todos} removeTodo={removeTodo} toggleTodo={toggleTodo}/>
                     <TodoForm addTodo = {addTodo}/>
                 </Grid>
             </Grid>

@@ -4,18 +4,23 @@ import Paper from "@material-ui/core/Paper";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 
-export default function TodoList (props) {
-    console.log(props)
+function TodoList ({todos, removeTodo, toggleTodo}) {
+    
     return(
         <Paper>
             <List>
-                {props.todos.map((todo) => 
-                <>
-                        <TodoItem key={todo.id} task={todo.task} completed={todo.completed}/>
-                <Divider/>
-                </>
-                )}
+                {todos.map((todo) => (
+                // To add a key to a fragment, we have to use the long-hand version
+                // rather than <> </>, we have to use <React.Fragment>
+                <TodoItem
+                    {...todo}
+                    removeTodo={removeTodo}
+                    toggleTodo={toggleTodo}
+                />
+            ))}
             </List>
         </Paper>
     )
 }
+
+export default TodoList;
