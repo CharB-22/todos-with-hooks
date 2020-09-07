@@ -9,15 +9,18 @@ function TodoList ({todos, removeTodo, toggleTodo, editTodo}) {
     return(
         <Paper>
             <List>
-                {todos.map((todo) => (
+                {todos.map((todo, i) => (
                 // To add a key to a fragment, we have to use the long-hand version
                 // rather than <> </>, we have to use <React.Fragment>
+                <>
                 <TodoItem
                     {...todo}
                     removeTodo={removeTodo}
                     toggleTodo={toggleTodo}
                     editTodo={editTodo}
                 />
+                { i < todos.length - 1 && <Divider />}
+                </>
             ))}
             </List>
         </Paper>
