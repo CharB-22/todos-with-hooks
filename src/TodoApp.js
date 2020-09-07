@@ -34,6 +34,15 @@ export default function TodoApp() {
         console.log(newTodos)
       }
 
+      const editTodo = (todoId, newTask) => {
+          // Find the matching todo to update
+          const updatedTodos = todos.map (todo => todo.id === todoId ?
+            {...todo, task: newTask } : todo
+            )
+            setTodos(updatedTodos)
+        // Replace this todo with new one created
+      }
+
     return(
         <Paper
         style={{
@@ -51,7 +60,7 @@ export default function TodoApp() {
             </AppBar>
             <Grid container justify="center" style={{marginTop: "1rem"}}>
                 <Grid item xs={11} md={8} lg={4}>
-                    <TodoList todos = {todos} removeTodo={removeTodo} toggleTodo={toggleTodo}/>
+                    <TodoList todos = {todos} removeTodo={removeTodo} toggleTodo={toggleTodo} editTodo= {editTodo}/>
                     <TodoForm addTodo = {addTodo}/>
                 </Grid>
             </Grid>
