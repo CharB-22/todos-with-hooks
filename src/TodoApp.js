@@ -1,5 +1,5 @@
 import React from "react";
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import TodoList from "./TodoList";
 import TodoForm from "./TodoForm";
 import { v4 as uuidv4 } from 'uuid';
@@ -10,15 +10,20 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Grid from "@material-ui/core/Grid";
 
 export default function TodoApp() {
-    const initialTodos = []
-
-      const [todos, setTodos] = useState(initialTodos)
+    const initialTodos = JSON.parse(window.localStorage.getItem("todos")) || [];
+    console.log(initialTodos)
+    const [todos, setTodos] = useState(initialTodos)
 
       //Have a function to add the todos created in the form to the states
-      const addTodo = (newTodoText) => {
+    const addTodo = (newTodoText) => {
           // Concatenate the new value to the already existing array of todos
         setTodos([...todos, {id: uuidv4(), task: newTodoText, completed: false}]);
       }
+
+      // this function will pass every time the component is rendered
+      useEffect( ()=> {
+          window.localStorage.setItem("todos", JSON.stringify(todos))
+      }, [todos])
 
       const removeTodo = todoId => {
         const newTodos = todos.filter(todo => todo.id !== todoId);
